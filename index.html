@@ -5,26 +5,41 @@
 const GIF = "catgiffaster.gif";
 const COLOR = "maroon"
 
-function createGif (x, y) {
+async function createGif (x, y) {
+  const gif = await nn.loadImage(GIF)
   nn.create('img')
     .set({ src: GIF })
     .css({
       position: 'absolute', //place in the middle
-      left: x, 
-      top: y, 
+      left: x - (gif.width / 3), 
+      top: y - (gif.height / 2), 
     })
     .addTo('body')
 }
-async function setup() {
+ async function setup() {
   nn.get('body').css({ backgroundColor: COLOR})
-  //const landscape = nn.width > nn.height
+  const gif = await nn.loadImage(GIF)
 
-  //const size = nn.width > nn.height ? (nn.height / 2) : (nn.width / 2)
+   //const landscape = nn.width > nn.height
+
+  //comment const size = nn.width > nn.height ? (nn.height / 2) : nn.width / 2
   //const size = QUESTION ? IF_TRUE: IF_FALSE (TYRANY STATEMENT) 
-  const gif = await nn.loadImage(GIF) //hold here for any code that uses GIF, until gif has loaded. Await must be in function, and needs to be using asychronous code, so declare ASYNC in function
-  const x = nn.width / 2 - (gif.width / 3) //dont position based on middle, we are offsetting by half the size in each direciton
-  const y = nn.height / 2 - (gif.height / 2)
-  createGif(x, y)
+   //awiat hold here for any code that uses GIF, until gif has loaded. Await must be in function, and needs to be using asychronous code, so declare ASYNC in function
+  const colSize = gif.width / 4 //fourht of the size of the gif image
+  const numCols = nn.width / colSize
+  
+  const rowSize = gif.height / 2 // getting each indiv height so that we have overlap
+  const numRows = nn.height * 0.75 / rowSize //creates amount of rows, * .75 so that it does not reach the bottom 
+  for (let r = 0; r < numRows; r++) {
+    for (let i = 0; i < numCols; i++) {
+      const x = i * colSize //one gif starts where the other ends
+      //dont position based on middle, we are offsetting by half the size in each direciton
+      const y = r * rowSize //if y = 0, rows are on top of one another
+      
+      createGif(x, y)
+    }
+  }
+  
   
   
 }
