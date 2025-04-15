@@ -2,4 +2,32 @@
 <script>
 /* global nn */
   
+const GIF = "catgiffaster.gif";
+const COLOR = "maroon"
+
+function createGif (x, y) {
+  nn.create('img')
+    .set({ src: GIF })
+    .css({
+      position: 'absolute', //place in the middle
+      left: x, 
+      top: y, 
+    })
+    .addTo('body')
+}
+async function setup() {
+  nn.get('body').css({ backgroundColor: COLOR})
+  //const landscape = nn.width > nn.height
+
+  //const size = nn.width > nn.height ? (nn.height / 2) : (nn.width / 2)
+  //const size = QUESTION ? IF_TRUE: IF_FALSE (TYRANY STATEMENT) 
+  const gif = await nn.loadImage(GIF) //hold here for any code that uses GIF, until gif has loaded. Await must be in function, and needs to be using asychronous code, so declare ASYNC in function
+  const x = nn.width / 2 - (gif.width / 3) //dont position based on middle, we are offsetting by half the size in each direciton
+  const y = nn.height / 2 - (gif.height / 2)
+  createGif(x, y)
+  
+  
+}
+  
+nn.on('load', setup)
 </script>
