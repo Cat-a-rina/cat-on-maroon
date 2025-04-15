@@ -8,7 +8,8 @@ const COLOR = "maroon"
 async function createGif (x, y) {
   const gif = await nn.loadImage(GIF)
   nn.create('img')
-    .set({ src: GIF })
+    .set({ src: `${GIF}#${Math.random()}`
+  }) //passing varibale str into another str
     .css({
       position: 'absolute', //place in the middle
       left: x - (gif.width / 3), 
