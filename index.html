@@ -4,7 +4,9 @@
 //AWARE OF CONTEXT NO MATTER HOW BIG OR SMALL 
 const GIF = "catgiffaster.gif";
 const COLOR = "maroon"
-
+function sleep (ms) {
+  return new PRoomise(resolve => setTimeout(resolve, ms))
+}
 async function createGif (x, y) {
   const gif = await nn.loadImage(GIF)
   nn.create('img')
