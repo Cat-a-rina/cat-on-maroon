@@ -9,7 +9,7 @@ function sleep (ms) {
 }
 async function createGif (x, y) {
   const gif = await nn.loadImage(GIF)
-  nn.create('img')
+  const g = nn.create('img')
     .set({ src: `${GIF}#${Math.random()}`
   }) //passing varibale str into another str
     .css({
@@ -18,47 +18,65 @@ async function createGif (x, y) {
       height: gif.height,
       left: x - (gif.width / 3), 
       top: y - (gif.height / 2), 
+      transition: 'all 1s'
     })
+
     .addTo('body')
+    g.on('mouseover', () => {
+      g.css({ width: '0px', height: '0px' })
+    })
+    
+    g.on('mouseout', () => {
+      setTimeout(() => {
+        g.css({ width: `${g.width}px`, height: `${g.height}px`})
+      }, 1000)
+    })
 }
   
  async function createGifCircle(num, scale, radius, url) {
    for (let i = 0; i < num; i++) {
-     const w = nn.width / 2
-     const h = nn.height /2
+     let w = nn.width / 2
+     let h = nn.height /2
      const x = w + Math.sin(i * scale) * radius
      const y = h + Math.cos(i * scale) * radius
      await sleep(100)
      createGif(x, y)
+     w = w - 100;
+     h = h - 100;
+     radius = radius + 1
+     //makes it go kinda backwards
+     scale = scale - 0.0025
+     //scale = scale - 0.5
    }
  }
  async function setup() {
   nn.get('body').css({ backgroundColor: COLOR})
   
-  createGifCircle(22, 0.3, 100, GIF)
-    createGifCircle(22, 0.3, 150, GIF)
-    createGifCircle(22, 0.3, 200, GIF)
+  await createGifCircle(200, 0.2, 100, GIF)
+  //createGifCircle(50, 0.3, 150, GIF)
+    //createGifCircle(100, 0.3, 200, GIF)
   const gif = await nn.loadImage(GIF)
-
+  createGif(gif.width, gif.height)
+ 
    //const landscape = nn.width > nn.height
 
   //comment const size = nn.width > nn.height ? (nn.height / 2) : nn.width / 2
   //const size = QUESTION ? IF_TRUE: IF_FALSE (TYRANY STATEMENT) 
    //awiat hold here for any code that uses GIF, until gif has loaded. Await must be in function, and needs to be using asychronous code, so declare ASYNC in function
-  const colSize = gif.width / 4 //fourht of the size of the gif image
-  const numCols = nn.width / colSize
+  ////const colSize = gif.width / 4 //fourht of the size of the gif image
+  //const numCols = nn.width / colSize
   
-  const rowSize = gif.height / 2 // getting each indiv height so that we have overlap
-  const numRows = nn.height * 0.75 / rowSize //creates amount of rows, * .75 so that it does not reach the bottom 
-  for (let r = 0; r < numRows; r++) {
-    for (let i = 0; i < numCols; i++) {
-      const x = i * colSize //one gif starts where the other ends
+  ////const rowSize = gif.height / 2 // getting each indiv height so that we have overlap
+ //// const numRows = nn.height * 0.75 / rowSize //creates amount of rows, * .75 so that it does not reach the bottom 
+ //// for (let r = 0; r < numRows; r++) {
+    ////for (let i = 0; i < numCols; i++) 
+      ////const x = i * colSize //one gif starts where the other ends
       //dont position based on middle, we are offsetting by half the size in each direciton
-      const y = r * rowSize //if y = 0, rows are on top of one another
+      ////const y = r * rowSize //if y = 0, rows are on top of one another
       
-      createGif(x, y)
-    }
-  }
+      ////createGif(x, y)
+    ////
+  
   
   
   
