@@ -5,7 +5,7 @@
 const GIF = "catgiffaster.gif";
 const COLOR = "maroon"
 function sleep (ms) {
-  return new PRoomise(resolve => setTimeout(resolve, ms))
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
 async function createGif (x, y) {
   const gif = await nn.loadImage(GIF)
@@ -14,13 +14,30 @@ async function createGif (x, y) {
   }) //passing varibale str into another str
     .css({
       position: 'absolute', //place in the middle
+      width: gif.width,
+      height: gif.height,
       left: x - (gif.width / 3), 
       top: y - (gif.height / 2), 
     })
     .addTo('body')
 }
+  
+ async function createGifCircle(num, scale, radius, url) {
+   for (let i = 0; i < num; i++) {
+     const w = nn.width / 2
+     const h = nn.height /2
+     const x = w + Math.sin(i * scale) * radius
+     const y = h + Math.cos(i * scale) * radius
+     await sleep(100)
+     createGif(x, y)
+   }
+ }
  async function setup() {
   nn.get('body').css({ backgroundColor: COLOR})
+  
+  createGifCircle(22, 0.3, 100, GIF)
+    createGifCircle(22, 0.3, 150, GIF)
+    createGifCircle(22, 0.3, 200, GIF)
   const gif = await nn.loadImage(GIF)
 
    //const landscape = nn.width > nn.height
