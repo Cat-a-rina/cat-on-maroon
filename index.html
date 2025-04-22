@@ -23,12 +23,12 @@ async function createGif (x, y) {
 
     .addTo('body')
     g.on('mouseover', () => {
-      g.css({ width: '0px', height: '0px' })
+      g.css({ transform: 'rotate(360deg)' })
     })
     
     g.on('mouseout', () => {
       setTimeout(() => {
-        g.css({ width: `${g.width}px`, height: `${g.height}px`})
+        g.css({ transform: 'rotate(0deg)'})
       }, 1000)
     })
 }
