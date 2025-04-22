@@ -52,11 +52,10 @@ async function createGif (x, y) {
  async function setup() {
   nn.get('body').css({ backgroundColor: COLOR})
   
-  await createGifCircle(200, 0.2, 100, GIF)
+  await createGifCircle(120, 0.2, 100, GIF)
   //createGifCircle(50, 0.3, 150, GIF)
     //createGifCircle(100, 0.3, 200, GIF)
   const gif = await nn.loadImage(GIF)
-  createGif(gif.width, gif.height)
  
    //const landscape = nn.width > nn.height
 
